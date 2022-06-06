@@ -66,5 +66,4 @@ const main = () => {
 };
 
 exports.main = main;
-exports.getNewPoint = getNewPoint;
 exports.Board = Board;
