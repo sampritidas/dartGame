@@ -1,42 +1,20 @@
-const randomInt = () => Math.floor(Math.random() * 10);
-
-const showStatus = (currentScore) => {
-  console.log('🎯 --> ', currentScore);
-};
-
-const showTotalScore = (totalScore) => {
-  console.log('Current Score : ', totalScore);
-};
-
-showFinalScore = (finalScore) => {
-  console.log('Final Score : ', finalScore)
-};
-
-const getNewPoint = () => {
-  const x = randomInt();
-  const y = randomInt();
-  return { x, y };
-};
-
 class Game {
   constructor(board) {
     this.board = board;
     this.totalScore = 0;
   }
 
-  play(totalRounds) {
+  play(totalRounds, getPoints, log) {
     while (totalRounds > 0) {
-      const newPoint = getNewPoint();
-      const newScore = this.board.getScore(newPoint);
+      const score = this.board.getScore(getPoints());
 
-      showStatus(newScore);
+      log('🎯 --> ', score);
+      this.totalScore += score;
 
-      this.totalScore += newScore;
-
-      showTotalScore(this.totalScore);
+      log('Current Score : ', this.totalScore);
       totalRounds--;
     }
-    showFinalScore(this.totalScore);
+    log('Final Score : ', this.totalScore);
   }
 }
 

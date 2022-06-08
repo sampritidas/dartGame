@@ -1,5 +1,7 @@
 const assert = require('assert');
 const { Board, scoreOnDistance } = require('../src/board');
+const { getNewPoint } = require('../src/dartGame');
+const { Game } = require('../src/game');
 
 describe('Board.distanceFromCenter', () => {
   it('Should give the distance which is inside range', () => {
@@ -44,5 +46,36 @@ describe('scoreBasedOnDistance', () => {
 
   it('Should give score when distance out of range', () => {
     assert.strictEqual(scoreOnDistance(11), 0);
+  });
+});
+
+describe('Game.play', () => {
+  it('Should give total score', () => {
+    const board = new Board();
+    const game = new Game(board);
+    const getPoint = () => {
+      return { x: 10, y: 15 };
+    }
+
+    const log = (logs, ...args) => {
+      return function () {
+        logs.push(...args);
+      }
+    }
+
+    const logs = [];
+    const mockLog = log(logs, 'hello');
+
+    game.play(2, getPoint, mockLog);
+    const expected = ['hello', 'hello', 'hello', 'hello', 'hello'];
+
+    assert.deepStrictEqual(logs, expected);
+  });
+});
+
+describe('getNewPoint', () => {
+  it('Should give one point', () => {
+    const getPoint = () => 2;
+    assert.deepStrictEqual(getNewPoint(getPoint), { x: 2, y: 2 });
   });
 });
